@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>汽车问答系统</title>
+    <link rel = "stylesheet" href = "bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <script type = "text/javascript" src = "bower_components/jquery/dist/jquery.min.js"></script>
+    <script type = "text/javascript" src = "bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <style type = "text/css">
+         #content h1, form{
+            text-align: center;
+         }
+         #qs {
+             width: 400px;
+         }
+         #ans {
+             width: 400px;
+             height: 200px;
+             visibility: hidden;
+             overflow: auto;
+         }
+
+    </style>
+    <script type = "text/javascript">
+        function test() {
+            var question = $('#qs').val();
+            if(question === "") {
+                alert("请输入问题");
+                return;
+            }
+            var date = new Date();
+            var timestamp = date.getTime();
+            $.get("../AjaxWrite", {question:question, timestamp:timestamp},
+                    function (data) {
+                        $('#ans').html(data);
+                        $('#ans').css("visibility","visible");
+                        //alert(data);
+                    }
+            );
+        }
+    </script>
+</head>
+<body>
+    <div id = "content" class="container">
+        <h1>汽车问答系统</h1>
+        <form role = "form">
+            <div class = "form-group">               
+                <textarea id="qs" class = "form-control center-block" placeholder = "请输入问题参数"></textarea> 
+            </div>
+            <div class="form-group">
+                <input type="button" class = "btn btn-default" value = "submit" onclick="test()"/>
+            </div>
+        </form>
+        <div id = "ans" class = "center-block bg-info"></div>
+    </div>
+</body>
+</html>
